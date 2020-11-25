@@ -1,0 +1,71 @@
+---
+title: "clean"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+# Join 2020 Data
+
+Get RBs from adv_rush that are in ff_2020. This way I can have advanced rushing stats and fantasy points in same table.
+
+```{r}
+ff_2020 <- ff_2020 %>%
+  filter(fant_pos == "RB")
+
+ff_2020 <- ff_2020[ff_2020$player %in% adv_rush_2020$player,]
+
+ff_2020 <- left_join(x=ff_2020,y = adv_rush_2020,by = "player")
+```
+
+
+# Join 2019 Data
+
+```{r}
+ff_2019 <- ff_2019 %>%
+  filter(fant_pos == "RB")
+
+ff_2019 <- ff_2019[ff_2019$player %in% adv_rush_2019$player,]
+
+ff_2019 <- left_join(x=ff_2019,y = adv_rush_2019,by = "player")
+```
+
+# rbind
+
+```{r}
+ff_data <- rbind(ff_2020, ff_2019)
+```
+
+I have skewed data
+```{r}
+standarize <- function(variable) {
+  (variable - mean(variable))/(max(variable)-min(variable))
+}
+
+hist(standarize(ff_data$r_yds))
+
+normalize <- function(variable) {
+  (variable - min(variable))/(max(variable)-min(variable))
+}
+
+hist(normalize(ff_data$r_yds))
+```
+
+# Dispose of useless variables
+
+```{r}
+names(ff_data)
+ff_data <- ff_data %>%
+  select(-rk.x, -tm.x, -age.x, -gs.x, -cmp, -p_att, -p_yds, -ptd, -int, -x2pm, -x2pp, -rk.y, -tm.y, -age.y, -g.y, -gs.y, -att, -yds, -x1d, -ybc_att, -yac_att, -att_br)
+```
+
+# Per game stats
+
+```{r}
+for (i in names(ff_data)) {
+  ff_data %>%
+    i
+  break
+}
+```
+

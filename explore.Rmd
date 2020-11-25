@@ -1,0 +1,24 @@
+---
+title: "Explore"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+# ppr vs targets
+
+correlation
+
+```{r}
+ff_data<-ff_data[complete.cases(ff_data[ ,"ppr"]),]
+tgt_ppr <- cor(ff_data$tgt, ff_data$ppr)
+```
+
+```{r}
+ggplot(ff_data, aes(x = tgt, y = ppr)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  annotate(geom = "text", x = 125, y = 300, label = paste("r = ",format(round(tgt_ppr,4))), colour = "blue")
+```
+
+
