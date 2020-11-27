@@ -59,13 +59,20 @@ ff_data <- ff_data %>%
   select(-rk.x, -tm.x, -age.x, -gs.x, -cmp, -p_att, -p_yds, -ptd, -int, -x2pm, -x2pp, -rk.y, -tm.y, -age.y, -g.y, -gs.y, -att, -yds, -x1d, -ybc_att, -yac_att, -att_br)
 ```
 
-# Per game stats
-
 ```{r}
-for (i in names(ff_data)) {
-  ff_data %>%
-    i
-  break
+ff_string <- str_split(ff_data$player, "\\\\")
+
+ff_data <- ff_data %>% 
+  mutate(player_name = NA)
+
+for (i in seq_along(ff_string)) {
+  ff_data$player_name[[i]] = ff_string[[i]][[1]]
 }
+
+ff_data <- ff_data %>%
+  select(player_name, everything(), -player)
 ```
 
+```{r}
+#write.csv(ff_data, "ff_data.csv", row.names = F)
+```

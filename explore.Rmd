@@ -1,24 +1,97 @@
 ---
 title: "Explore"
-output: html_notebook
+output: github_document
 editor_options: 
   chunk_output_type: console
 ---
 
+```{r}
+library(tidyverse)
+library(readr)
+ff_data <- read_csv("data/ff_data.csv")
+```
+
+I want to take a look into statistics for RBs that could affect PPR. This will allow me to see which RBs would be worth drafting based off of the statistics of interest. I will also have the player's name in the graph so we know which player's are worth drafting.
+
 # ppr vs targets
 
-correlation
+First I look at how the number of targets that a RB has affects his PPR output.
+
+## correlation
 
 ```{r}
 ff_data<-ff_data[complete.cases(ff_data[ ,"ppr"]),]
 tgt_ppr <- cor(ff_data$tgt, ff_data$ppr)
 ```
 
+# Targets vs PPR
 ```{r}
-ggplot(ff_data, aes(x = tgt, y = ppr)) +
-  geom_point() +
+ggplot(ff_data, aes(x = tgt, y = ppr, label = player_name)) +
   geom_smooth(method = "lm") +
-  annotate(geom = "text", x = 125, y = 300, label = paste("r = ",format(round(tgt_ppr,4))), colour = "blue")
+  annotate(geom = "text", x = 100, y = 400, label = paste("r = ",format(round(tgt_ppr,4))), colour = "blue") +
+  theme_classic() +
+  labs(
+    title = "Number of Targets Effect on PPR for RB",
+    x = "Targets",
+    y = "PPR"
+  )+
+  geom_text(size = 2)
 ```
 
+This graph shows that the number of targets has a strong correlation to the PPR. Thus, drafting a player based on his number of targets could help maximize the performance of a fantasy team per week.
 
+# YBC vs PPR
+
+I also want to look at how yards before contact (YBC) affects PPR.
+
+## correlation
+
+```{r}
+ff_data<-ff_data[complete.cases(ff_data[ ,"ppr"]),]
+ybc_ppr <- cor(ff_data$ybc, ff_data$ppr)
+```
+
+## Graph
+
+```{r}
+ggplot(ff_data, aes(x = ybc, y = ppr, label = player_name)) +
+  geom_text(size = 2.5) +
+  geom_smooth(method = "lm") +
+  annotate(geom = "text", x = 750, y = 400, label = paste("r = ",format(round(ybc_ppr,4))), colour = "blue") +
+  theme_classic() +
+  labs(
+    title = "Yards Before Contact vs PPR",
+    x = "Yards Before Contact",
+    y = "PPR"
+  )
+```
+
+This graph shows that YBC has a stronger relationship with PPR than targets. This is probably because the players have good offensive lines or they are used in the passing game so they are receiving the ball in open space.
+
+# YAC vs PPR
+
+Additionally, I want to see how yards after contact (YAC) affects the PPR of a player.
+
+## correlation
+
+```{r}
+ff_data<-ff_data[complete.cases(ff_data[ ,"ppr"]),]
+yac_ppr <- cor(ff_data$yac, ff_data$ppr)
+```
+
+## Graph
+
+```{r}
+ggplot(ff_data, aes(x = yac, y = ppr, label = player_name)) +
+  geom_text(size = 2.5) +
+  geom_smooth(method = "lm") +
+  annotate(geom = "text", x = 750, y = 400, label = paste("r = ",format(round(yac_ppr,4))), colour = "blue") +
+  theme_classic() +
+  labs(
+    title = "Yards After Contact vs PPR",
+    x = "Yards After Contact",
+    y = "PPR"
+  )
+```
+
+Not as strong of a correlation as YBC; however, it still has quite a stron relationship. I think that this is an important statistic because even if a player has a weak offensive line, he can still be productive to your fantasy team if he is good after contact.
