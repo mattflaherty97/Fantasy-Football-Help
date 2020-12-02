@@ -42,5 +42,11 @@ adv_rush_2019 <- read_csv("data/adv_rush_2019.csv")
 adv_rush_2019 <- clean_names(adv_rush_2019)
 ```
 
+# NFL fast R data
+
+```{r}
+#install.packages("nflfastR")
+library(nflfastR)
+```
 
 

@@ -6,7 +6,10 @@ editor_options:
 ---
 
 ```{r}
+library(stats)
 library(tidyverse)
+#install.packages("factoextra")
+library(factoextra)
 library(readr)
 ff_data <- read_csv("data/ff_data.csv")
 ```
@@ -95,3 +98,4 @@ ggplot(ff_data, aes(x = yac, y = ppr, label = player_name)) +
 ```
 
 Not as strong of a correlation as YBC; however, it still has quite a stron relationship. I think that this is an important statistic because even if a player has a weak offensive line, he can still be productive to your fantasy team if he is good after contact.
+

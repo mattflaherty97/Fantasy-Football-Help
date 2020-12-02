@@ -57,8 +57,12 @@ hist(normalize(ff_data$r_yds))
 names(ff_data)
 ff_data <- ff_data %>%
   select(-rk.x, -tm.x, -age.x, -gs.x, -cmp, -p_att, -p_yds, -ptd, -int, -x2pm, -x2pp, -rk.y, -tm.y, -age.y, -g.y, -gs.y, -att, -yds, -x1d, -ybc_att, -yac_att, -att_br)
+
+ff_2020 <- ff_2020 %>%
+  select(-rk.x, -tm.x, -age.x, -gs.x, -cmp, -p_att, -p_yds, -ptd, -int, -x2pm, -x2pp, -rk.y, -tm.y, -age.y, -g.y, -gs.y, -att, -yds, -x1d, -ybc_att, -yac_att, -att_br)
 ```
 
+# for 2019 & 2020
 ```{r}
 ff_string <- str_split(ff_data$player, "\\\\")
 
@@ -73,6 +77,22 @@ ff_data <- ff_data %>%
   select(player_name, everything(), -player)
 ```
 
+# for 2020
+```{r}
+ff_string <- str_split(ff_2020$player, "\\\\")
+
+ff_2020 <- ff_2020 %>% 
+  mutate(player_name = NA)
+
+for (i in seq_along(ff_string)) {
+  ff_2020$player_name[[i]] = ff_string[[i]][[1]]
+}
+
+ff_2020 <- ff_2020 %>%
+  select(player_name, everything(), -player)
+```
+
 ```{r}
 #write.csv(ff_data, "ff_data.csv", row.names = F)
+write.csv(ff_2020, "data/ff_2020.csv", row.names = F)
 ```
