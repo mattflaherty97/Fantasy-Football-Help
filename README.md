@@ -8,7 +8,7 @@ The data used for this data set is collected from [Pro Football Reference](https
 
 # Cluster analysis for RBs
 
-In this file I want to find RBs that are similar to each other. I use a k-means cluster with k equal to 3 so I have 3 different clusters of RBs that perform similarly in yards before contact, yards after contact, targets, and PPR. I chose a k value equal to 3 by using an elbow plot for clusters with the "total within sum of square" values. After 3 clusters, there is not a significant decrease in the value.
+In this [file](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/cluster_analysis.md), I want to find RBs that are similar to each other. I use a k-means cluster with k equal to 3 so I have 3 different clusters of RBs that perform similarly in yards before contact, yards after contact, targets, and PPR. I chose a k value equal to 3 by using an elbow plot for clusters with the "total within sum of square" values. After 3 clusters, there is not a significant decrease in the value.
 
 ![Elbow Plot](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/cluster_analysis_files/figure-gfm/unnamed-chunk-4-1.png)
 
