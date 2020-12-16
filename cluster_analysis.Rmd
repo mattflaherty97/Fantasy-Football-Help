@@ -79,3 +79,4 @@ ff_scale$player <- rownames(ff_scale)
 ff_scale$clusters3 <- as.factor(k3$cluster)
 ```
 
+# ggradar plot
