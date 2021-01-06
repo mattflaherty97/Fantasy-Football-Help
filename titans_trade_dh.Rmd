@@ -132,3 +132,4 @@ The results show that the average EPA/play for Tannehill (`r tan_ci[1]`, `r tan_
 # Conclusion
 
 If the Titans want to keep the player that will put the most points on the scoreboard per play, then they should keep Tannehill and look to trade Henry. I think Henry will be "eye candy" for many teams as he has just rushed for over 2,000 yards in a single season but running backs fail to provide large amounts of value to teams. I also believe that major improvements are needed defensively and that the team would benefit from getting those players through a trade. 
+test
