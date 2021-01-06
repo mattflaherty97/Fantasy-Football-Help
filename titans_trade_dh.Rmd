@@ -1,0 +1,134 @@
+---
+title: "Titans Trade Derrick Henry"
+author: "Matthew Flaherty"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  html_document: 
+    code_folding: hide
+    toc: yes
+    number_sections: true
+    toc_depth: 3
+    toc_float: true
+---
+```{r global options, include = FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r, include=FALSE, warning=FALSE}
+library(nflfastR)
+library(tidyverse)
+```
+
+# Introduction
+
+The 2020 season for the Tennessee Titans has been one to remember. They won their first AFC South division title since 2008 while also having a potent offense. This sounds amazing; however, the defense has been lack luster and could pose a problem on their route to Superbowl LV. Although the season is not quite yet over, we can still look forward to next season while enjoying this memorable one. Things will get more difficult as the Titans will play a first place schedule in 2021 while rumors of offensive coordinator, Arthur Smith, for other head coaching positions loom. This will be an important offseason for the team as a false step could hinder the team's potential moving forward.
+
+I am proposing that the Titans trade Derrick Henry for either draft picks or defensive players. I am proposing this because I believe that the offense can remain just as potent without Derrick Henry and I beleive that the Titans could receive solid defensive players or drafter defensive players to rebuild the lagging defense. It has been a good ride with Henry in the backfield, but I think now is the perfect time to sell high on a world-class talent. I believe that the offense will be just as productive in the hands of quarterback, Ryan Tannehill.
+
+In this post, I want to look at the expected points added (EPA) of both Tannehill and Henry. Depending on who produces the most points per play, that player could be the better piece for the offense moving forward. Both players could have high returns in the market as both players can light up a stat sheet; however, the Titans need to favor the player that is best at producing points than lighting up the stat sheet.
+
+# Background
+
+The goal of the offense is to score as many points as possible so that the team can have the best chance of winning the game. EPA is the number of points that are added to the scoreboard per play. Thus, teams want players that will maximize the number of points added to the scoreboard per play. This can allow teams to find diamonds in the rough as some players may be good at getting their team down to the endzone but do not have many touchdowns on the stat sheet. In other words, EPA is a good statistic to value a player.
+
+# Data
+
+The data for this post will come from the 2020 NFL season. I only want the Titans offensive plays; thus, I will filter the main data frame when `posteam` has the value `TEN`. I also only want pass and run plays so I filter by `pass` equals to 1 (TRUE) and `rush` equals to 1 (TRUE).
+
+```{r}
+seasons <- 2020
+pbp <- purrr::map_df(seasons, function(x) {
+  readRDS(
+    url(
+      glue::glue("https://raw.githubusercontent.com/guga31bb/nflfastR-data/master/data/play_by_play_{x}.rds")
+    )
+  )
+})
+```
+
+```{r include=FALSE}
+# all NFL teams
+unique(pbp[c('posteam')]) == 'TEN'
+
+titans <- pbp %>%
+  filter(posteam == 'TEN') %>%
+  filter(pass == 1 | rush == 1)
+
+colnames(titans)
+
+unique(titans[c('name')])
+```
+
+# Methods
+
+Having retrieved the Titans offensive data, I can take a look into the average EPA per play for Tannehill and Henry. I will do a sample of 10,000 bootstrap observations to determine the 95% confidence interval (CI) for Tannehill and Henry.
+
+## Tannehill Stats
+
+compare him to Rodgers and Mahomes.
+
+```{r include=FALSE}
+tannehill <- titans %>%
+  filter(name == 'R.Tannehill')
+
+tan_out <- NA
+R <- 10000
+
+for (i in 1:R) {
+  tan_samp <- sample(x = tannehill$epa, size = length(tannehill$epa), replace = TRUE)
+  tan_out[i] <-  mean(tan_samp)
+}
+
+# CI interval
+alpha <- 0.05
+tan_ci <- quantile(tan_out, c(alpha/2,1-(alpha/2)))
+```
+
+This figure shows the sampling distribution of the average EPA/play for Tannehill. 
+
+```{r tan_hist}
+hist(tan_out, main = "95% Confidence Interval for Ryan Tannehill EPA/play", xlab = "EPA/play", breaks = 100)
+abline(v = tan_ci[1], col = "red", lwd = 3)
+abline(v = tan_ci[2], col = "red", lwd = 3)
+abline(v = median(tan_out), col = "blue", lwd = 3)
+legend("topleft", legend=c("95% CI", "Median"),
+       col=c("red", "blue"), lty = 1, cex = 0.8)
+```
+
+## Henry Stats
+
+```{r include=FALSE}
+henry <- titans %>%
+  filter(name == 'D.Henry')
+
+hen_out <- NA
+R <- 10000
+
+for (i in 1:R) {
+  hen_samp <- sample(x = henry$epa, size = length(henry$epa), replace = TRUE)
+  hen_out[i] <-  mean(hen_samp)
+}
+
+# CI interval
+alpha <- 0.05
+hen_ci <- quantile(hen_out, c(alpha/2,1-(alpha/2)))
+```
+
+This figure shows the sampling distribution of the average EPA/play for Henry.
+
+```{r}
+hist(hen_out, main = "95% Confidence Interval for Derrick Henry EPA/play", xlab = "EPA/play", breaks = 100)
+abline(v = hen_ci[1], col = "red", lwd = 3)
+abline(v = hen_ci[2], col = "red", lwd = 3)
+abline(v = median(hen_out), col = "blue", lwd = 3)
+legend("topleft", legend=c("95% CI", "Median"),
+       col=c("red", "blue"), lty = 1, cex = 0.8)
+```
+
+# Results
+
+The results show that the average EPA/play for Tannehill (`r tan_ci[1]`, `r tan_ci[2]`) is significantly better than Henry (`r hen_ci[1]`, `r hen_ci[2]`) at the 95% CI. Therefore, there is conclusive evidence that Tannehill will perform better than Henry at the 95% CI.
+
+# Conclusion
+
+If the Titans want to keep the player that will put the most points on the scoreboard per play, then they should keep Tannehill and look to trade Henry. I think Henry will be "eye candy" for many teams as he has just rushed for over 2,000 yards in a single season but running backs fail to provide large amounts of value to teams. I also believe that major improvements are needed defensively and that the team would benefit from getting those players through a trade. 
