@@ -32,6 +32,10 @@ January 7, 2021 marked the final day for [Big Data Bowl](https://www.kaggle.com/
 
 Data for the Big Data Bowl can be found [here](https://www.kaggle.com/c/nfl-big-data-bowl-2021/data). As the data is player tracking data, it is quite large and cannot be uploaded to GitHub because of size restrictions.
 
-![](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/titans_fake_punt/titans_fk_punt.gif)
+Player tracked play:
+
+![Player Track](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/titans_fake_punt/titans_fk_punt.gif)
+
+Here is the actual play:
 
 ![Actual Play](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/titans_fake_punt/gif.gif)
