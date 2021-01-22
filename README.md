@@ -34,3 +34,4 @@ Data for the Big Data Bowl can be found [here](https://www.kaggle.com/c/nfl-big-
 
 ![](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/titans_fake_punt/titans_fk_punt.gif)
 
+![Actual Play](https://github.com/mattflaherty97/Fantasy-Football-Help/blob/main/titans_fake_punt/gif.gif)
